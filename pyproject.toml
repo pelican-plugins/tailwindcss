@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "pelican-tailwindcss"
+version = "0.0.0"
+description = "Pelican plugin to add TailwindCSS to your website."
+authors = ["Luca Fedrizzi <github@lcfd.me>"]
+license = "AGPL-3.0"
+readme = "README.md"
+keywords = ["pelican", "plugin", "tailwindcss", "css", "css-framework"]
+repository = "https://github.com/pelican-plugins/tailwindcss"
+documentation = "https://docs.getpelican.com"
+packages = [
+    { include = "pelican" },
+]
+
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Environment :: Console",
+    "Framework :: Pelican",
+    "Framework :: Pelican :: Plugins",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.urls]
+"Funding" = "https://donate.getpelican.com/"
+"Issue Tracker" = "https://github.com/pelican-plugins/tailwindcss/issues"
+
+[tool.poetry.dependencies]
+python = ">=3.6.2,<4.0"
+pelican = ">=4.5"
+markdown = {version = ">=3.2", optional = true}
+
+[tool.poetry.dev-dependencies]
+black = "^22"
+flake8 = "^3.9"
+flake8-black = "^0.2"
+invoke = "^1.3"
+isort = "^5.4"
+livereload = "^2.6"
+markdown = "^3.2"
+pytest = "^7.0"
+pytest-cov = "^3.0"
+pytest-pythonpath = "^0.7"
+pytest-sugar = "^0.9"
+Werkzeug = "^1.0"
+
+[tool.poetry.extras]
+markdown = ["markdown"]
+
+[tool.autopub]
+project-name = "tailwindcss"
+git-username = "botpub"
+git-email = "botpub@autopub.rocks"
+append-github-contributor = true
+
+[tool.isort]
+# Maintain compatibility with Black
+profile = "black"
+multi_line_output = 3
+
+# Sort imports within their section independent of the import type
+force_sort_within_sections = true
+
+# Designate "pelican" as separate import section
+known_pelican = "pelican"
+sections = "FUTURE,STDLIB,THIRDPARTY,PELICAN,FIRSTPARTY,LOCALFOLDER"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

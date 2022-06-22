@@ -1,0 +1,1 @@
+from .tailwindcss import *  # NOQA
