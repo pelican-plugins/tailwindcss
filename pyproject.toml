@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pelican-tailwindcss"
-version = "0.1.0"
+version = "0.2.0"
 description = "Pelican plugin to add TailwindCSS to your website."
 authors = ["Luca Fedrizzi <github@lcfd.me>"]
 license = "AGPL-3.0"
