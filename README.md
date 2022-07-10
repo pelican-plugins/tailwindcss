@@ -15,6 +15,10 @@ This plugin helps you use [TailwindCSS][] in your Pelican website.
 Because you want use [TailwindCSS][] in seconds.
 Not hours.
 
+## Requirements
+
+In order to run this plugin, you need to install NodeJS. (I'm looking to replace this dependency by using a Python package. – Luca)
+
 ## Installation
 
 This plugin can be installed via:
@@ -75,6 +79,17 @@ TAILWIND = {
     ],
 }
 ```
+
+### Tailwind plugins install
+
+As you can see from the example above it is possible to add the `plugins` property to the configuration.
+Just add the name of a Tailwind plugin in this property and the plugin will be installed.
+
+## Useful informations
+
+### Plugins
+
+Your `tailwind.config.js` file will only be copied when Pelican starts. This means that any changes after starting Pelican will not be considered. For example if you want to install a new plugin for Tailwind you will have to restart Pelican.
 
 ## Contributing
 
