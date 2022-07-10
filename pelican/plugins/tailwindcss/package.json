@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "scripts": {},
+    "scripts": {
+        "tailwindcss": "tailwindcss"
+    },
     "author": "",
     "license": "AGPL-3.0",
     "dependencies": {
