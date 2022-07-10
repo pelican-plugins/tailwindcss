@@ -1,5 +1,6 @@
 import os
 import os.path as path
+import shutil
 import subprocess
 
 from pelican import signals
@@ -12,8 +13,14 @@ BASE_DIR = os.path.dirname(__file__)
 def initialize(po):
     SETTINGS = po.settings
     TAILWIND_SETTINGS = SETTINGS.get("TAILWIND", None)
+    THEME_PATH = path.abspath(path.join(po.path, ".."))
 
     node_modules_path = os.path.join(BASE_DIR, "node_modules/")
+
+    # Copy the tailwind.config.js file in order
+    # to be able to use Tailwind plugins
+    twconfig_file_path = os.path.join(THEME_PATH, "tailwind.config.js")
+    shutil.copyfile(twconfig_file_path, os.path.join(BASE_DIR, "tailwind.config.js"))
 
     if os.path.isdir(node_modules_path):
         j_version = subprocess.check_output(
@@ -51,9 +58,9 @@ def initialize(po):
 
 def generate_css(po):
     THEME_PATH = path.abspath(path.join(po.path, ".."))
-    input_file_path = os.path.join(f"{THEME_PATH}", "input.css")
-    output_file_path = os.path.join(f"{THEME_PATH}", "output/output.css")
-    twconfig_file_path = os.path.join(THEME_PATH, "tailwind.config.js")
+    input_file_path = os.path.join(THEME_PATH, "input.css")
+    output_file_path = os.path.join(THEME_PATH, "output/output.css")
+    twconfig_file_path = os.path.join(BASE_DIR, "tailwind.config.js")
 
     input_output = f"-i {input_file_path} -o {output_file_path}"
     print(f"{utils.LOG_PREFIX} Build css ({output_file_path})")
