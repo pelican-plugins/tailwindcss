@@ -66,7 +66,13 @@ An example of a complete `TAILWIND` setting:
 
 ```python
 TAILWIND = {
-    "version": "3.0.0"
+    "version": "3.0.0",
+    "plugins": [
+        "@tailwindcss/typography",
+        "@tailwindcss/forms",
+        "@tailwindcss/line-clamp",
+        "@tailwindcss/aspect-ratio",
+    ],
 }
 ```
 
