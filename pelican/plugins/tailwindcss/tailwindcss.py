@@ -1,15 +1,20 @@
 import os
+import os.path as path
 import subprocess
 
 from pelican import signals
 
-from .utils import utils
+from .utils import commands, installs, utils
 
 BASE_DIR = os.path.dirname(__file__)
 
 
 def initialize(po):
+    SETTINGS = po.settings
+    TAILWIND_SETTINGS = SETTINGS.get("TAILWIND", None)
+
     node_modules_path = os.path.join(BASE_DIR, "node_modules/")
+
     if os.path.isdir(node_modules_path):
         j_version = subprocess.check_output(
             "npm -j ls tailwindcss",
@@ -23,49 +28,36 @@ def initialize(po):
             f"{utils.LOG_PREFIX} The version is right (v{installed_tailwind_version})"
         )
 
-        settings = po.settings.get("TAILWIND", None)
-        if settings:
+        if TAILWIND_SETTINGS:
             print(f"{utils.LOG_PREFIX} Settings were found")
-            desired_version = settings.get("version", None)
-            if installed_tailwind_version != desired_version:
-                mismatch_message = "Different Tailwind version specified in settings"
-                print(f"{utils.LOG_PREFIX} {mismatch_message}: v{desired_version}")
-                print(f"{utils.LOG_PREFIX} Uninstall current Tailwind version")
-                subprocess.run(
-                    f"npm uninstall -C {BASE_DIR} tailwindcss",
-                    shell=True,
-                )
-                print(f"{utils.LOG_PREFIX} Install different Tailwind version")
-                subprocess.run(
-                    f"npm i -C {BASE_DIR} tailwindcss@{desired_version}",
-                    shell=True,
-                )
+
+            installs.another_tailwind(
+                settings=TAILWIND_SETTINGS,
+                installed_tailwind_version=installed_tailwind_version,
+            )
+
+            installs.plugins(settings=TAILWIND_SETTINGS)
+
         else:
             print(f"{utils.LOG_PREFIX} No settings were found")
     else:
         print("{utils.LOG_PREFIX} Initialization required, first start")
-        settings = po.settings.get("TAILWIND", None)
-        if settings:
+        commands.run_in_plugin("npm install")
+        if TAILWIND_SETTINGS:
             print(f"{utils.LOG_PREFIX} Settings were found")
-            desired_version = settings.get("version", None)
-            subprocess.run(
-                f"npm i -C {BASE_DIR} tailwindcss@{desired_version}",
-                shell=True,
-            )
-        subprocess.run(
-            f"npm install -C {BASE_DIR}",
-            shell=True,
-        )
+            installs.tailwind(settings=TAILWIND_SETTINGS)
+            installs.plugins(settings=TAILWIND_SETTINGS)
 
 
 def generate_css(po):
-    output_path = po.output_path
-    input_file_path = os.path.join(f"{output_path}", "../input.css")
-    output_file_path = os.path.join(f"{output_path}", "output.css")
-    twconfig_file_path = os.path.join(output_path, "../tailwind.config.js")
+    THEME_PATH = path.abspath(path.join(po.path, ".."))
+    input_file_path = os.path.join(f"{THEME_PATH}", "input.css")
+    output_file_path = os.path.join(f"{THEME_PATH}", "output/output.css")
+    twconfig_file_path = os.path.join(THEME_PATH, "tailwind.config.js")
 
     input_output = f"-i {input_file_path} -o {output_file_path}"
     print(f"{utils.LOG_PREFIX} Build css ({output_file_path})")
+
     subprocess.run(
         f"npx tailwindcss -c {twconfig_file_path} {input_output}",
         shell=True,
