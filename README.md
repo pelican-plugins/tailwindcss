@@ -1,6 +1,6 @@
 # TailwindCSS Plugin for Pelican 🌬
 
-[![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/tailwindcss/build)](https://github.com/pelican-plugins/tailwindcss/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/tailwindcss/main.yml?branch=main)](https://github.com/pelican-plugins/tailwindcss/actions)
 [![PyPI Version](https://img.shields.io/pypi/v/pelican-tailwindcss)](https://pypi.org/project/pelican-tailwindcss/)
 ![License](https://img.shields.io/pypi/l/pelican-tailwindcss?color=blue)
 
