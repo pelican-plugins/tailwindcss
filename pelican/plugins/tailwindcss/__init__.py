@@ -1,1 +1,1 @@
-from .tailwindcss import *  # NOQA
+from .tailwindcss import *  # noqa: F403,PGH004,RUF100
