@@ -1,0 +1,28 @@
+{
+  "template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+  "commit": "8d76f8a131f62fb06a285de1f142973c1ea7222a",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "plugin_name": "Tailwind CSS",
+      "repo_name": "tailwindcss",
+      "package_name": "tailwindcss",
+      "distribution_name": "pelican-tailwindcss",
+      "version": "0.2.0",
+      "description": "Pelican plugin to add Tailwind CSS to your web site",
+      "authors": "{name = \"Pelican Dev Team\", email = \"authors@getpelican.com\"}",
+      "keywords": "\"pelican\", \"plugin\", \"tailwindcss\", \"css\", \"css-framework\"",
+      "readme": "README.md",
+      "contributing": "CONTRIBUTING.md",
+      "license": "GNU Affero General Public License v3|AGPL-3.0",
+      "repo_url": "https://github.com/pelican-plugins/tailwindcss",
+      "dev_status": "4 - Beta",
+      "tests_exist": false,
+      "python_version": "~=3.9",
+      "pelican_version": ">=4.5",
+      "_template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+      "_commit": "8a4f543e999c7a2b4ab49c724bf84ff4192f4c94"
+    }
+  },
+  "directory": null
+}
