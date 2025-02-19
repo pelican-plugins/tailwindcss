@@ -1,5 +1,5 @@
 import os
-import os.path as path
+from os import path
 import shutil
 import subprocess
 
@@ -63,7 +63,7 @@ def generate_css(po):
     twconfig_file_path = os.path.join(BASE_DIR, "tailwind.config.js")
 
     input_output = f"-i {input_file_path} -o {output_file_path}"
-    print(f"{utils.LOG_PREFIX} Build css ({output_file_path})")
+    print(f"{utils.LOG_PREFIX} Build CSS ({output_file_path})")
 
     commands.run_in_plugin(
         f"npx tailwindcss -c {twconfig_file_path} {input_output}",
