@@ -37,6 +37,10 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# PDM
+.pdm-python
+pdm.lock
+
 # Poetry
 poetry.lock
 
