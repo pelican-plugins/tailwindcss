@@ -48,7 +48,7 @@ def initialize(po):
         else:
             print(f"{utils.LOG_PREFIX} No settings were found")
     else:
-        print("{utils.LOG_PREFIX} Initialization required, first start")
+        print(f"{utils.LOG_PREFIX} Initialization required -- first start")
         commands.run_in_plugin("npm install")
         if TAILWIND_SETTINGS:
             print(f"{utils.LOG_PREFIX} Settings were found")
