@@ -56,7 +56,14 @@ source-includes = [
     "CONTRIBUTING.md",
 ]
 includes = ["pelican/"]
-excludes = ["**/.DS_Store", "**/test_data/**", "tasks.py"]
+excludes = [
+    "**/.DS_Store",
+    "**/package-lock.json",
+    "**/node_modules",
+    "**/tailwind.config.js",
+    "**/test_data/**",
+    "tasks.py",
+]
 
 [tool.autopub]
 project-name = "Tailwind CSS"
