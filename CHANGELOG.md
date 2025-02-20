@@ -4,7 +4,7 @@ CHANGELOG
 0.2.0 - 2022-07-10
 ------------------
 
-Now we can install and use TailwindCSS plugins.
+Add support for installing and using Tailwind CSS plugins.
 
 Contributed by [Luca Fedrizzi](https://github.com/lcfd) via [PR #3](https://github.com/pelican-plugins/tailwindcss/pull/3/)
 
