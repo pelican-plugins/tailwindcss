@@ -9,11 +9,11 @@ This plugin helps you use [Tailwind CSS][] in your Pelican web site.
 
 ## Why Use This Plugin?
 
-Because you want use [Tailwind CSS][] in seconds. Not hours.
+Because you want use Tailwind CSS in seconds. Not hours.
 
 ## Requirements
 
-In order to run this plugin, you need to install Node.JS. (Someday this dependency could be replaced with a Python package.)
+This plugin is tested on Tailwind CSS 3.0.24. If you would like to add support for Tailwind CSS 4.0+, please submit a pull request along with appropriate additions to the test suite.
 
 ## Installation
 
@@ -48,42 +48,22 @@ As long as you have not explicitly added a `PLUGINS` setting to your Pelican set
     @tailwind utilities;
     ```
 
-3. Add the build file (`output.css`) in your `base.html`.
+3. Add the build file (`output.css`) in your `base.html`:
 
     ```html
     <link rel="stylesheet" href="/output.css" />
     ```
 
-4. Done! You should be ready to use [Tailwind CSS][] in your website template.
+4. In your Pelican settings, specify the target Tailwind CSS version via the `TAILWIND` setting:
 
-## Advanced Usage
+    ```python
+    TAILWIND = {
+        "version": "3.0.24",
+    }
+    ```
 
-In your settings you can configure the plugin's behavior using the `TAILWIND` setting.
+5. Done! You should be ready to use Tailwind CSS in your web site templates.
 
-An example of a complete `TAILWIND` setting:
-
-```python
-TAILWIND = {
-    "version": "3.0.0",
-    "plugins": [
-        "@tailwindcss/typography",
-        "@tailwindcss/forms",
-        "@tailwindcss/line-clamp",
-        "@tailwindcss/aspect-ratio",
-    ],
-}
-```
-
-### Tailwind Plugin Installation
-
-As you can see from the example above, it is possible to add the `plugins` property to the configuration.
-Just add the name of a Tailwind plugin to the list, and the plugin will be installed.
-
-## Useful Information
-
-### Plugins
-
-Your `tailwind.config.js` file will only be copied when Pelican starts. This means that any changes made after starting Pelican will not be recognized. For example, if you want to install a new plugin for Tailwind, you will have to restart Pelican in order for that plugin to become active.
 
 ## Contributing
 
