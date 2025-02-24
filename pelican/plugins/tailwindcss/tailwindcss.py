@@ -1,73 +1,64 @@
+import importlib.resources
 import os
-from os import path
-import shutil
+from pathlib import Path
 import subprocess
+import sysconfig
+
+from rich import print
 
 from pelican import signals
 
-from .utils import commands, installs, utils
+from .utils.utils import (
+    LOG_PREFIX,
+    build_tailwind_css,
+    get_env_var_prefix,
+    get_tailwind_css_version,
+)
 
-BASE_DIR = os.path.dirname(__file__)
+PLUGIN_BASE_DIR = importlib.resources.files(__package__)
+SITE_PACKAGES_DIR = Path(sysconfig.get_path("purelib"))
 
 
 def initialize(po):
-    SETTINGS = po.settings
-    TAILWIND_SETTINGS = SETTINGS.get("TAILWIND", None)
-    THEME_PATH = path.abspath(path.join(po.path, ".."))
+    # Print notice if TAILWIND settings are found.
+    tailwind_settings = po.settings.get("TAILWIND")
+    if tailwind_settings:
+        print(f"{LOG_PREFIX} Settings were found")
 
-    node_modules_path = os.path.join(BASE_DIR, "node_modules/")
+    # Get Tailwind CSS version if specified in settings.
+    prefix = ""
+    tailwind_version = get_tailwind_css_version(po.settings)
+    if tailwind_version != "latest":
+        tailwind_version = f"v{tailwind_version}"
+        prefix = f"TAILWINDCSS_VERSION={tailwind_version} "
 
-    # Copy the tailwind.config.js file in order
-    # to be able to use Tailwind plugins
-    twconfig_file_path = os.path.join(THEME_PATH, "tailwind.config.js")
-    shutil.copyfile(twconfig_file_path, os.path.join(BASE_DIR, "tailwind.config.js"))
-
-    if os.path.isdir(node_modules_path):
-        j_version = subprocess.check_output(
-            "npm -j ls tailwindcss",
-            cwd=BASE_DIR,
-            shell=True,
-        ).decode("utf-8")
-
-        installed_tailwind_version = utils.get_npm_package_version(j_version=j_version)
-
-        print(
-            f"{utils.LOG_PREFIX} The version is right (v{installed_tailwind_version})"
-        )
-
-        if TAILWIND_SETTINGS:
-            print(f"{utils.LOG_PREFIX} Settings were found")
-
-            installs.another_tailwind(
-                settings=TAILWIND_SETTINGS,
-                installed_tailwind_version=installed_tailwind_version,
-            )
-
-            installs.plugins(settings=TAILWIND_SETTINGS)
-
-        else:
-            print(f"{utils.LOG_PREFIX} No settings were found")
-    else:
-        print(f"{utils.LOG_PREFIX} Initialization required -- first start")
-        commands.run_in_plugin("npm install")
-        if TAILWIND_SETTINGS:
-            print(f"{utils.LOG_PREFIX} Settings were found")
-            installs.tailwind(settings=TAILWIND_SETTINGS)
-            installs.plugins(settings=TAILWIND_SETTINGS)
+    # Download Tailwind CSS version if not already present.
+    tailwind_cli = Path(
+        SITE_PACKAGES_DIR / "pytailwindcss" / "bin" / tailwind_version / "tailwindcss"
+    )
+    if not tailwind_cli.exists():
+        print(f"Downloading Tailwind CSS CLI {tailwind_version} to {tailwind_cli}")
+        subprocess.run(f"{prefix}tailwindcss_install", shell=True, check=False)
 
 
 def generate_css(po):
-    THEME_PATH = path.abspath(path.join(po.path, ".."))
-    input_file_path = os.path.join(THEME_PATH, "input.css")
-    output_file_path = os.path.join(THEME_PATH, "output/output.css")
-    twconfig_file_path = os.path.join(BASE_DIR, "tailwind.config.js")
+    prefix = suffix = ""
+    # Get Tailwind CSS version if specified in settings.
+    # If not the latest version, compose prefix for Tailwind CLI & suffix for logging.
+    tailwind_version = get_tailwind_css_version(po.settings)
+    if tailwind_version != "latest":
+        prefix = get_env_var_prefix(tailwind_version)
+        suffix = f" via Tailwind CSS v{tailwind_version}"
 
-    input_output = f"-i {input_file_path} -o {output_file_path}"
-    print(f"{utils.LOG_PREFIX} Build CSS ({output_file_path})")
+    project_root = os.path.abspath(os.path.join(po.path, ".."))
+    input_file_path = os.path.join(project_root, "input.css")
+    output_dir = po.settings.get("OUTPUT_PATH", f"{project_root}/output")
+    output_file_path = Path(f"{output_dir}/output.css")
+    twconfig_file_path = os.path.join(project_root, "tailwind.config.js")
 
-    commands.run_in_plugin(
-        f"npx tailwindcss -c {twconfig_file_path} {input_output}",
-    )
+    print(f"{LOG_PREFIX} Build CSS @ {output_file_path}{suffix}")
+
+    build_tailwind_css(prefix, input_file_path, output_file_path, twconfig_file_path)
 
 
 def register():

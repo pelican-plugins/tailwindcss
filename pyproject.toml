@@ -2,7 +2,7 @@
 name = "pelican-tailwindcss"
 version = "0.3.0"
 description = "Pelican plugin to add Tailwind CSS to your web site"
-authors = [{name = "Pelican Dev Team", email = "authors@getpelican.com"}]
+authors = [{name = "Justin Mayer", email = "entroP@gmail.com"}]
 license = {text = "AGPL-3.0"}
 readme = "README.md"
 keywords = ["pelican", "plugin", "tailwindcss", "css", "css-framework"]
@@ -26,6 +26,7 @@ classifiers = [
 requires-python = "~=3.9"
 dependencies = [
     "pelican>=4.5",
+    "pytailwindcss>=0.2.0",
 ]
 
 [project.urls]
@@ -58,9 +59,6 @@ source-includes = [
 includes = ["pelican/"]
 excludes = [
     "**/.DS_Store",
-    "**/package-lock.json",
-    "**/node_modules",
-    "**/tailwind.config.js",
     "**/test_data/**",
     "tasks.py",
 ]

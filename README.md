@@ -11,10 +11,6 @@ This plugin helps you use [Tailwind CSS][] in your Pelican web site.
 
 Because you want use [Tailwind CSS][] in seconds. Not hours.
 
-## Requirements
-
-In order to run this plugin, you need to install Node.JS. (Someday this dependency could be replaced with a Python package.)
-
 ## Installation
 
 This plugin can be installed via:
@@ -48,42 +44,25 @@ As long as you have not explicitly added a `PLUGINS` setting to your Pelican set
     @tailwind utilities;
     ```
 
-3. Add the build file (`output.css`) in your `base.html`.
+3. Add the build file (`output.css`) in your `base.html`:
 
     ```html
     <link rel="stylesheet" href="/output.css" />
     ```
 
-4. Done! You should be ready to use [Tailwind CSS][] in your website template.
+4. Done! You should be ready to use [Tailwind CSS][] in your web site templates.
 
 ## Advanced Usage
 
 In your settings you can configure the plugin's behavior using the `TAILWIND` setting.
 
-An example of a complete `TAILWIND` setting:
+For example, to install and use a specific version of Tailwind CSS:
 
 ```python
 TAILWIND = {
-    "version": "3.0.0",
-    "plugins": [
-        "@tailwindcss/typography",
-        "@tailwindcss/forms",
-        "@tailwindcss/line-clamp",
-        "@tailwindcss/aspect-ratio",
-    ],
+    "version": "3.0.20",
 }
 ```
-
-### Tailwind Plugin Installation
-
-As you can see from the example above, it is possible to add the `plugins` property to the configuration.
-Just add the name of a Tailwind plugin to the list, and the plugin will be installed.
-
-## Useful Information
-
-### Plugins
-
-Your `tailwind.config.js` file will only be copied when Pelican starts. This means that any changes made after starting Pelican will not be recognized. For example, if you want to install a new plugin for Tailwind, you will have to restart Pelican in order for that plugin to become active.
 
 ## Contributing
 
