@@ -1,6 +1,6 @@
 [project]
 name = "pelican-tailwindcss"
-version = "0.3.0"
+version = "0.4.0"
 description = "Pelican plugin to add Tailwind CSS to your web site"
 authors = [{name = "Justin Mayer", email = "entroP@gmail.com"}]
 license = {text = "AGPL-3.0"}

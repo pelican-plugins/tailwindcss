@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+0.4.0 - 2025-10-27
+------------------
+
+Use Tailwind CSS standalone CLI instead of NPM
+
+Contributed by [Justin Mayer](https://github.com/justinmayer) via [PR #10](https://github.com/pelican-plugins/tailwindcss/pull/10/)
+
+
 0.3.0 - 2025-02-20
 ------------------
 
